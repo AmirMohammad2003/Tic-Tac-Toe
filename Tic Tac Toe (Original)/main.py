@@ -3,7 +3,6 @@
 
 import pygame
 
-
 pygame.font.init()
 width = 600
 height = 700
@@ -18,6 +17,7 @@ WHITE = (255, 255, 255)
 BLUE = (0, 0, 255)
 RED = (255, 0, 0)
 
+
 class Game:
     def __init__(self, player1, player2):
         self.player1 = player1
@@ -31,7 +31,7 @@ class Game:
     def move(self, pos):
         if 0 <= pos[0] <= width and hoffset <= pos[1] <= height:
             x = pos[0] * 3 // width
-            y = (pos[1] - hoffset) * 3 // (height-hoffset)
+            y = (pos[1] - hoffset) * 3 // (height - hoffset)
             if self.checkValid(x, y):
                 self.moves.add((x, y))
                 if self.turn == 1:
@@ -48,6 +48,7 @@ class Game:
                     return -1
 
         return False
+
 
 class Player:
     def __init__(self):
@@ -77,28 +78,45 @@ class Player:
 
         return False
 
+
 def redrawWindow(surface, game):
     surface.fill(WHITE)
     turn = game.turn
     text = font.render(f"Player {turn} it\'s your turn", 1, BLACK)
-    surface.blit(text, (width//2-text.get_width()//2, hoffset//2-text.get_height()//2))
+    surface.blit(text, (width // 2 - text.get_width() // 2,
+                        hoffset // 2 - text.get_height() // 2))
     for i in range(2):
-        pygame.draw.line(surface, BLACK, ((i+1)*width//3,hoffset), ((i+1)*width//3, height))
-        pygame.draw.line(surface, BLACK, (0,((i+1)*(height-hoffset)//3)+hoffset), (width, ((i+1)*(height-hoffset)//3)+hoffset))
+        pygame.draw.line(surface, BLACK, ((i + 1) * width // 3, hoffset),
+                         ((i + 1) * width // 3, height))
+        pygame.draw.line(surface, BLACK,
+                         (0, ((i + 1) * (height - hoffset) // 3) + hoffset),
+                         (width,
+                          ((i + 1) * (height - hoffset) // 3) + hoffset))
 
     for move in game.player1.moves:
-        circleMiddle = ((move[0]*width/3)+width/6, (move[1]*(height-hoffset)/3)+(height-hoffset)/6+hoffset)
-        pygame.draw.circle(surface, BLUE, circleMiddle, 2 * width//15, 4)
+        circleMiddle = ((move[0] * width / 3) + width / 6,
+                        (move[1] * (height - hoffset) / 3) +
+                        (height - hoffset) / 6 + hoffset)
+        pygame.draw.circle(surface, BLUE, circleMiddle, 2 * width // 15, 4)
         del circleMiddle
 
-    radius = 2*width//15
+    radius = 2 * width // 15
     for move in game.player2.moves:
-        circleMiddle = ((move[0]*width/3)+width/6, (move[1]*(height-hoffset)/3)+(height-hoffset)/6+hoffset)
-        pygame.draw.line(surface, RED, (circleMiddle[0]-radius,circleMiddle[1]-radius), (circleMiddle[0]+radius, circleMiddle[1]+radius), 4)
-        pygame.draw.line(surface, RED, (circleMiddle[0]-radius,circleMiddle[1]+radius), (circleMiddle[0]+radius, circleMiddle[1]-radius), 4)
+        circleMiddle = ((move[0] * width / 3) + width / 6,
+                        (move[1] * (height - hoffset) / 3) +
+                        (height - hoffset) / 6 + hoffset)
+        pygame.draw.line(surface, RED,
+                         (circleMiddle[0] - radius, circleMiddle[1] - radius),
+                         (circleMiddle[0] + radius, circleMiddle[1] + radius),
+                         4)
+        pygame.draw.line(surface, RED,
+                         (circleMiddle[0] - radius, circleMiddle[1] + radius),
+                         (circleMiddle[0] + radius, circleMiddle[1] - radius),
+                         4)
         del circleMiddle
 
     del turn
+
 
 def main():
     clock = pygame.time.Clock()
@@ -118,28 +136,31 @@ def main():
                 pos = event.pos
                 winner = game.move(pos)
 
-
         redrawWindow(win, game)
 
         if winner == 1:
             text = largefont.render("Player 1 Wins, Congrats!!!", 1, RED)
-            win.blit(text, (width//2-text.get_width()//2, height//2-text.get_height()//2))
+            win.blit(text, (width // 2 - text.get_width() // 2,
+                            height // 2 - text.get_height() // 2))
             run = False
 
         elif winner == 2:
             text = largefont.render("Player 2 Wins, Congrats!!!", 1, RED)
-            win.blit(text, (width//2-text.get_width()//2, height//2-text.get_height()//2))
+            win.blit(text, (width // 2 - text.get_width() // 2,
+                            height // 2 - text.get_height() // 2))
             run = False
 
         elif winner == -1:
             text = largefont.render("Oops Looks Like a Tie!!!", 1, RED)
-            win.blit(text, (width//2-text.get_width()//2, height//2-text.get_height()//2))
+            win.blit(text, (width // 2 - text.get_width() // 2,
+                            height // 2 - text.get_height() // 2))
             run = False
 
         pygame.display.update()
 
     pygame.time.delay(2000)
     del run
+
 
 def main_menu(surface):
     clock = pygame.time.Clock()
@@ -148,7 +169,8 @@ def main_menu(surface):
         win.fill(WHITE)
         clock.tick(20)
         text = largefont.render("Click to start the GAME XD", 1, RED)
-        win.blit(text, (width//2-text.get_width()//2, height//2-text.get_height()//2))
+        win.blit(text, (width // 2 - text.get_width() // 2,
+                        height // 2 - text.get_height() // 2))
         pygame.display.update()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -159,6 +181,7 @@ def main_menu(surface):
                 main()
 
     pygame.display.quit()
+
 
 if __name__ == '__main__':
     main_menu(win)
