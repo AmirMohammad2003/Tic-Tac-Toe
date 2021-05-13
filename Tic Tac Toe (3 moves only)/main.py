@@ -162,8 +162,7 @@ def main():
     pygame.time.delay(2000)
     del run
 
-
-if __name__ == '__main__':
+def main_menu(surface):
     clock = pygame.time.Clock()
     run = True
     while run:
@@ -182,3 +181,6 @@ if __name__ == '__main__':
                 main()
 
     pygame.display.quit()
+
+if __name__ == '__main__':
+    main_menu(win)
