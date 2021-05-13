@@ -15,7 +15,9 @@ largefont = pygame.font.SysFont("comicsans", 65)
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 BLUE = (0, 0, 255)
+GREEN = (0, 255, 0)
 RED = (255, 0, 0)
+GREY = (128, 128, 128)
 
 
 class Game:
@@ -100,15 +102,19 @@ def redrawWindow(surface, game):
                          (width,
                           ((i + 1) * (height - hoffset) // 3) + hoffset))
 
-    for move in game.player1.moves:
+    for sequence, move in enumerate(game.player1.moves):
         circleMiddle = ((move[0] * width / 3) + width / 6,
                         (move[1] * (height - hoffset) / 3) +
                         (height - hoffset) / 6 + hoffset)
+        text = largefont.render(str(sequence + 1), 1, GREY)
+        surface.blit(text, ((move[0] * width / 3) + width / 6 - text.get_width() // 2,
+                        (move[1] * (height - hoffset) / 3) +
+                        (height - hoffset) / 6 + hoffset - text.get_height() // 2))
         pygame.draw.circle(surface, BLUE, circleMiddle, 2 * width // 15, 4)
         del circleMiddle
 
     radius = 2 * width // 15
-    for move in game.player2.moves:
+    for sequence, move in enumerate(game.player2.moves):
         circleMiddle = ((move[0] * width / 3) + width / 6,
                         (move[1] * (height - hoffset) / 3) +
                         (height - hoffset) / 6 + hoffset)
@@ -120,6 +126,10 @@ def redrawWindow(surface, game):
                          (circleMiddle[0] - radius, circleMiddle[1] + radius),
                          (circleMiddle[0] + radius, circleMiddle[1] - radius),
                          4)
+        text = largefont.render(str(sequence + 1), 1, GREY)
+        surface.blit(text, ((move[0] * width / 3) + width / 6 - text.get_width() // 2,
+                        (move[1] * (height - hoffset) / 3) +
+                        (height - hoffset) / 6 + hoffset - text.get_height()))
         del circleMiddle
 
     del turn
