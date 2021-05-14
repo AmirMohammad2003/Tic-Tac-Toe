@@ -56,22 +56,12 @@ class Player:
 
     def checkWin(self):
         for i in range(3):
-            ho = set()
-            ve = set()
-            ri = set()
-            li = set()
+            ho, ve, ri, li = set(), set(), set(), set()
             for j in range(3):
-                if (j, i) in self.moves:
-                    ho.add((j, i))
-
-                if (i, j) in self.moves:
-                    ve.add((i, j))
-
-                if (j, j) in self.moves:
-                    ri.add((j, j))
-
-                if (2 - j, j) in self.moves:
-                    li.add((2 - j, j))
+                if (j, i) in self.moves: ho.add((j, i))
+                if (i, j) in self.moves: ve.add((i, j))
+                if (j, j) in self.moves: ri.add((j, j))
+                if (2 - j, j) in self.moves: li.add((2 - j, j))
 
             if len(ho) == 3 or len(ve) == 3 or len(ri) == 3 or len(li) == 3:
                 return True
