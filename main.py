@@ -1,6 +1,3 @@
-# Copyright (c) Amir Mohammad Ghadimi
-# inspired by the original Tic Tac Toe Game
-
 import pygame
 
 pygame.font.init()
